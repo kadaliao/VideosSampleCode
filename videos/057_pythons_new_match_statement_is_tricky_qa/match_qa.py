@@ -102,14 +102,6 @@ def timing_match():
 
 def timing_match_old():
     errno = 42
-    if errno == 0:
-        pass
-    elif errno == 1:
-        pass
-    elif errno == 42:
-        pass
-    else:
-        pass
 
 @dataclass
 class Click:
@@ -127,19 +119,8 @@ class Quit:
 
 def timing_match_by_class_old():
     event = "unknown"
-    if isinstance(event, Click) and event.button == "left":
+    if isinstance(event, Click):
         x,y = event.position
-    elif isinstance(event, Click):
-        x,y = event.position
-    elif isinstance(event, KeyPress) and event.key_name in ["Q","q"] \
-            or isinstance(event, Quit):
-        pass
-    elif isinstance(event, KeyPress) and event.key_name == "up arrow":
-        pass
-    elif isinstance(event, KeyPress):
-        pass
-    else:
-        pass
 
 def timing_match_by_class():
     event = "unknown"

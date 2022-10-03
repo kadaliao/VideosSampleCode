@@ -16,7 +16,6 @@ print("hello, world!")
 def sub():
     yield 2
     return  # oops!
-    yield 3
 
 
 def gen():

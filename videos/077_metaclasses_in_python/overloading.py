@@ -112,16 +112,21 @@ class OverloadDict(dict):
         prior_val = self.get(key, _MISSING)
         overloaded = getattr(value, '__overload__', False)
 
-        if prior_val is _MISSING:
+        if (
+            prior_val is not _MISSING
+            and isinstance(prior_val, OverloadList)
+            and not overloaded
+            or prior_val is not _MISSING
+            and not isinstance(prior_val, OverloadList)
+            and overloaded
+        ):
+            raise ValueError(self._errmsg(key))
+        elif prior_val is not _MISSING and isinstance(prior_val, OverloadList):
+            prior_val.append(value)
+        elif prior_val is _MISSING:
             insert_val = OverloadList([value]) if overloaded else value
             super().__setitem__(key, insert_val)
-        elif isinstance(prior_val, OverloadList):
-            if not overloaded:
-                raise ValueError(self._errmsg(key))
-            prior_val.append(value)
         else:
-            if overloaded:
-                raise ValueError(self._errmsg(key))
             super().__setitem__(key, value)
 
     @staticmethod
@@ -148,15 +153,15 @@ def overload_dict_usage():
 class OverloadMeta(type):
 
     @classmethod
-    def __prepare__(mcs, name, bases):
+    def __prepare__(cls, name, bases):
         return OverloadDict()
 
-    def __new__(mcs, name, bases, namespace, **kwargs):
+    def __new__(cls, name, bases, namespace, **kwargs):
         overload_namespace = {
             key: Overload(val) if isinstance(val, OverloadList) else val
             for key, val in namespace.items()
         }
-        return super().__new__(mcs, name, bases, overload_namespace, **kwargs)
+        return super().__new__(cls, name, bases, overload_namespace, **kwargs)
 
 
 class A(metaclass=OverloadMeta):
@@ -233,11 +238,12 @@ def time_performance():
         def f(x):
             return sum(range(1000))
 
+
+
     class S:
         def f(self, x, y=None):
-            if y is None:
-                return sum(range(1000))
-            return 42
+            return sum(range(1000)) if y is None else 42
+
 
     class T(metaclass=OverloadMeta):
         @overload

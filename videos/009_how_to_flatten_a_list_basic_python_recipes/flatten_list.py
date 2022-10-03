@@ -8,8 +8,7 @@ import time
 def flatten0(lst: list[list]) -> list:
     flat = []
     for l in lst:
-        for x in l:
-            flat.append(x)
+        flat.extend(iter(l))
     return flat
 
 def flatten1(lst: list[list]) -> list:
@@ -41,7 +40,7 @@ def time_f(f):
     M = 1000
     N = 100
     for _ in range(n):
-        lst = [[random.randint(0,1000000) for j in range(N)] for i in range(M)]
+        lst = [[random.randint(0,1000000) for _ in range(N)] for _ in range(M)]
         start = time.perf_counter()
         f(lst)
         elapsed += time.perf_counter() - start

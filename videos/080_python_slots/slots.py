@@ -179,11 +179,7 @@ def how_slots_work_example():
 
 class Member:
     def __get__(self, instance, owner):
-        if owner is None:
-            return self
-
-        val = ...  # C magic to access object at fixed offset within instance
-        return val
+        return self if owner is None else ...
 
     def __set__(self, instance, value):
         # C magic to set object at fixed offset within instance = value

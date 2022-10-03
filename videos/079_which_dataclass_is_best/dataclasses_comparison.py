@@ -363,10 +363,10 @@ def run_getattr(code: Code, trials=1_000_000) -> tuple[str, float]:
 
 
 def run_setattr(code: Code, trials=1_000_000) -> tuple[str, float]:
-    setup = code.define + '\n' + code.create
     stmt = code.setattr
     if stmt is None:
         return code.name, float('inf')
+    setup = code.define + '\n' + code.create
     return run_timeit(code.name, stmt, setup, trials)
 
 
@@ -390,9 +390,7 @@ def run_sizeof(code: Code) -> tuple[str, int]:
 
 def run_all_tests_for_function(f, title, fmt):
     print(title)
-    cases: list[tuple[str, float]] = []
-    for cls in code_classes:
-        cases.append(f(cls))
+    cases: list[tuple[str, float]] = [f(cls) for cls in code_classes]
     cases.sort(key=lambda x: x[1])
     for i, (name, t) in enumerate(cases):
         print(fmt.format(i, name, t))

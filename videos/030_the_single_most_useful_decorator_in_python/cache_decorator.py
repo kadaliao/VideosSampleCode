@@ -3,9 +3,7 @@ from functools import cache, lru_cache
 
 @lru_cache(maxsize=5)
 def fib(n):
-    if n <= 1:
-        return n
-    return fib(n - 1) + fib(n - 2)
+    return n if n <= 1 else fib(n - 1) + fib(n - 2)
 
 
 def main():

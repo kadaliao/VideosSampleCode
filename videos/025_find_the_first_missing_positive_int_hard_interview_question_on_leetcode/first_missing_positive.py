@@ -14,11 +14,7 @@ class Solution:
             if 0 < x < 301:
                 found[x] = True
 
-        for i, f in enumerate(found):
-            if not f:
-                return i
-
-        return 301
+        return next((i for i, f in enumerate(found) if not f), 301)
 
 def main():
     soln = Solution()

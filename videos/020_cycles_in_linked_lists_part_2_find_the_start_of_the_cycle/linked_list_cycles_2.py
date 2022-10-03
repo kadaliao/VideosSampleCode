@@ -37,11 +37,9 @@ class LinkedList(Generic[T]):
     def get_node(self, item) -> Node[T]:
         if not (isinstance(item, int) and item >= 0):
             raise ValueError(f'Index must be non-negative int, got: {item}')
-        n = 0
-        for node in self.iter_nodes():
+        for n, node in enumerate(self.iter_nodes()):
             if n == item:
                 return node
-            n += 1
         raise KeyError(item)
 
     def __getitem__(self, item) -> T:

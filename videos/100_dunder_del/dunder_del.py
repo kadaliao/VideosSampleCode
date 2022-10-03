@@ -97,11 +97,6 @@ def best_del_alternative():
 
 def main():
     what_del_is_not()
-    # plain_del_example()
-    # del_ignores_exceptions()
-    # del_may_never_be_called()
-    # del_may_be_called_multiple_times()
-    pass
 
 
 if __name__ == '__main__':

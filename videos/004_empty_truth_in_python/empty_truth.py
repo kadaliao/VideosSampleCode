@@ -5,6 +5,6 @@ def do_something(options=None):
 
 
 if __name__ == '__main__':
-    x = (_ for _ in [])
+    x = iter([])
 
     do_something(options={})

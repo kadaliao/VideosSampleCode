@@ -50,7 +50,7 @@ def maybe_someday():
     import numpy as np
     x = np.arange(10)
     y = x[3 < x < 5] # not today
-    y = x[(3 < x) & (x < 5)]
+    y = x[(x > 3) & (x < 5)]
 
 
 def rules_of_thumb(x, y, z):

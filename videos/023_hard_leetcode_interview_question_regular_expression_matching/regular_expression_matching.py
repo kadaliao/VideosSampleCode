@@ -6,7 +6,7 @@ class Solution:
         while p_idx < len(p) - 1:
             if p[p_idx + 1] == "*":
                 n = 0
-                while s_idx + n < len(s) and (p[p_idx] == "." or p[p_idx] == s[s_idx + n]):
+                while s_idx + n < len(s) and p[p_idx] in [".", s[s_idx + n]]:
                     n += 1
                 while n >= 0:
                     if self.isMatch(s, p, s_idx + n, p_idx + 2):
@@ -14,12 +14,11 @@ class Solution:
                     n -= 1
                 return False
             else:
-                if s_idx < len(s) and (p[p_idx] == "." or p[p_idx] == s[s_idx]):
-                    s_idx += 1
-                    p_idx += 1
-                else:
+                if s_idx >= len(s) or p[p_idx] not in [".", s[s_idx]]:
                     return False
-        return s_idx == len(s) - 1 and (p[p_idx] == "." or p[p_idx] == s[s_idx])
+                s_idx += 1
+                p_idx += 1
+        return s_idx == len(s) - 1 and p[p_idx] in [".", s[s_idx]]
 
 
 def main():

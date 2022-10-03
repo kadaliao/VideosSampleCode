@@ -49,8 +49,7 @@ def hash_str_and_b64_encode(hash_fn: Callable[[bytes], bytes], password: str) ->
     pw_bytes = password.encode("utf-8")
     hash_bytes = hash_fn(pw_bytes)
     hash_bytes = base64.b64encode(hash_bytes)
-    hashed_password = hash_bytes.decode("ascii")
-    return hashed_password
+    return hash_bytes.decode("ascii")
 
 
 def update_password_hashed(db, user, hash_fn: Callable[[bytes], bytes], password: str) -> None:

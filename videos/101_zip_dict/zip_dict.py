@@ -92,8 +92,7 @@ def separate_dicts_example_1():
                   "UC7_gcs09iThXybpVgjHZ_7g": 2_630_000,
                   "UCxHAlbZQNFU2LgEtiqd2Maw": 85_000}
 
-    for cid in names:
-        name = names[cid]
+    for cid, name in names.items():
         sub_count = sub_counts[cid]
         print(f'{name} has {sub_count} subscribers! Watch here: youtube.com/channel/{cid}')
 

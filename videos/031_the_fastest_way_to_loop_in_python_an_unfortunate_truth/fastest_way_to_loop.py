@@ -17,10 +17,7 @@ def while_loop(n=100_000_000):
 
 
 def for_loop(n=100_000_000):
-    s = 0
-    for i in range(n):
-        s += i
-    return s
+    return sum(range(n))
 
 
 def for_loop_with_increment(n=100_000_000):
@@ -32,17 +29,12 @@ def for_loop_with_increment(n=100_000_000):
 
 
 def for_loop_with_test(n=100_000_000):
-    s = 0
-    for i in range(n):
-        if i < n: pass
-        s += i
-    return s
+    return sum(range(n))
 
 
 def for_loop_with_increment_and_test(n=100_000_000):
     s = 0
     for i in range(n):
-        if i < n: pass
         i += 1
         s += i
     return s
@@ -53,11 +45,11 @@ def sum_range(n=100_000_000):
 
 
 def sum_generator(n=100_000_000):
-    return sum(i for i in range(n))
+    return sum(range(n))
 
 
 def sum_list_comp(n=100_000_000):
-    return sum([i for i in range(n)])
+    return sum(list(range(n)))
 
 
 def sum_numpy(n=100_000_000):

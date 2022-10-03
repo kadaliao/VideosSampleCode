@@ -1,4 +1,4 @@
-print(f"imported bad script")
+print("imported bad script")
 
 
 def useful_function(x):

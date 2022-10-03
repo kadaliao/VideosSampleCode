@@ -12,7 +12,7 @@ class ManualComment:
         self.text: str = text
 
     def __repr__(self):
-        return "{}(id={}, text={})".format(self.__class__.__name__, self.id, self.text)
+        return f"{self.__class__.__name__}(id={self.id}, text={self.text})"
 
     def __eq__(self, other):
         if other.__class__ is self.__class__:
@@ -22,10 +22,7 @@ class ManualComment:
 
     def __ne__(self, other):
         result = self.__eq__(other)
-        if result is NotImplemented:
-            return NotImplemented
-        else:
-            return not result
+        return NotImplemented if result is NotImplemented else not result
 
     def __hash__(self):
         return hash((self.__class__, self.id, self.text))

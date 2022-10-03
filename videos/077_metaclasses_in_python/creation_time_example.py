@@ -4,10 +4,10 @@ import time
 class LoadTimeMeta(type):
     base_time = time.perf_counter()
 
-    def __new__(mcs, name, bases, namespace):
-        print(mcs, name, bases, namespace)
+    def __new__(cls, name, bases, namespace):
+        print(cls, name, bases, namespace)
         namespace['__class_load_time__'] = time.perf_counter() - LoadTimeMeta.base_time
-        return super().__new__(mcs, name, bases, namespace)
+        return super().__new__(cls, name, bases, namespace)
 
 
 class A(metaclass=LoadTimeMeta):

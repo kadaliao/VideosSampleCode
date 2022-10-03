@@ -22,13 +22,13 @@ def every_n_characters(s, n):
 
 def bits_to_float(bits) -> float:
     fmt = ">d"
-    bz = bytes([int(chars, base=2) for chars in every_n_characters(bits, 8)])
+    bz = bytes(int(chars, base=2) for chars in every_n_characters(bits, 8))
     t = struct.unpack(fmt, bz)
     return t[0]
 
 
 def sign_exponent_fraction(s):
-    return s[0:1], s[1:12], s[12:64]
+    return s[:1], s[1:12], s[12:64]
 
 
 def pretty_float_bits(f) -> str:
@@ -37,7 +37,7 @@ def pretty_float_bits(f) -> str:
 
 def addition_fail():
     print(".1 + .2:", .1 + .2)
-    print(".1 + .2 == .3", .1 + .2 == .3)
+    print(".1 + .2 == .3", .1 == 0.09999999999999998)
     print(f".1:\t\t{pretty_float_bits(.1)}")
     print(f".2:\t\t{pretty_float_bits(.2)}")
     print(f".3:\t\t{pretty_float_bits(.3)}")

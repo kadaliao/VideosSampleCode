@@ -35,16 +35,16 @@ class A:
         print(f"f1({args=}, {kwargs=})")
 
     @StaticMethod
-    def f2(*args, **kwargs):
-        print(f"f2({args=}, {kwargs=})")
+    def f2(self, **kwargs):
+        print(f"f2({self:=}, {kwargs:=})")
 
     @classmethod
     def g1(cls, *args, **kwargs):
         print(f"g1({cls=}, {args=}, {kwargs=})")
 
     @ClassMethod
-    def g2(cls, *args, **kwargs):
-        print(f"g2({cls=}, {args=}, {kwargs=})")
+    def g2(self, *args, **kwargs):
+        print(f"g2({self:=}, {args:=}, {kwargs:=})")
 
 
 @staticmethod
