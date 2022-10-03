@@ -1,8 +1,8 @@
 class NoMultipleInheritanceMeta(type):
-    def __new__(mcs, name, bases, namespace, **kwargs):
+    def __new__(cls, name, bases, namespace, **kwargs):
         if len(bases) > 1:
             raise ValueError('Multiple inheritance is not allowed! :(')
-        return super().__new__(mcs, name, bases, namespace, **kwargs)
+        return super().__new__(cls, name, bases, namespace, **kwargs)
 
 
 class NoMultipleInheritance(metaclass=NoMultipleInheritanceMeta):

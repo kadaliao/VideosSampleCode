@@ -10,17 +10,15 @@ def _make_init(annotations):
             f'   self.{arg} = {arg}',
         ]
 
-    init_code = '\n'.join(lines)
-    return init_code
+    return '\n'.join(lines)
 
 
 class DataClassMeta(type):
-    def __new__(mcs, name, bases, namespace, **kwargs):
-        annotations = namespace.get('__annotations__')
-        if annotations:
+    def __new__(cls, name, bases, namespace, **kwargs):
+        if annotations := namespace.get('__annotations__'):
             init_code = _make_init(annotations)
             exec(init_code, globals(), namespace)
-        return super().__new__(mcs, name, bases, namespace, **kwargs)
+        return super().__new__(cls, name, bases, namespace, **kwargs)
 
 
 class DataClass(metaclass=DataClassMeta):

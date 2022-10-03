@@ -80,9 +80,8 @@ def combine(a, b, *, validator=None, key=None):
     result = []
     result.extend(a)
     result.extend(b)
-    if validator is not None:
-        if not all(map(validator, result)):
-            raise ValueError("invalid elements")
+    if validator is not None and not all(map(validator, result)):
+        raise ValueError("invalid elements")
     return result
 
 
@@ -208,7 +207,6 @@ def speed_differences():
 
 
 def main():
-    pass
     # either_way_works_example()
     # cannot_repeat_args()
     # force_keyword_argument()

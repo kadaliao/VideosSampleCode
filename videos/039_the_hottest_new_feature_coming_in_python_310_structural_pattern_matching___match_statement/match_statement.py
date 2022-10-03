@@ -103,7 +103,6 @@ def main():
     except ValueError:
         pass
     match_json_event({"verb": "GET", "page": "articles", "pageno": 5, "info": "extra"})
-    pass
 
 if __name__ == '__main__':
     main()

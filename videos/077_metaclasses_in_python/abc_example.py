@@ -21,8 +21,7 @@ def abstractmethods(cls):
 class ABCMeta(type):
     def __call__(abccls, *args, **kwargs): # called when you A()
         print("call", abccls, args, kwargs)
-        abstract = abstractmethods(abccls)
-        if abstract:
+        if abstract := abstractmethods(abccls):
             raise TypeError('no implementation for: ' + ', '.join(abstract))
         return super().__call__(*args, **kwargs)
 

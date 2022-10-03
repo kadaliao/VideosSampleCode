@@ -25,7 +25,7 @@ def compiler_example():
     task_queue = Queue()
     done_queue = Queue()
 
-    for i in range(NUMBER_OF_PROCESSES):
+    for _ in range(NUMBER_OF_PROCESSES):
         Process(target=worker, args=(task_queue, done_queue)).start()
 
     graph = {
@@ -35,7 +35,7 @@ def compiler_example():
 
     do_all_tasks(graph, task_queue, done_queue)
 
-    for i in range(NUMBER_OF_PROCESSES):
+    for _ in range(NUMBER_OF_PROCESSES):
         task_queue.put('STOP')
 
 

@@ -135,8 +135,7 @@ class OneTimePadXorText(EncryptedFile, prefix='otp'):
     def read(self):
         with open(self.file, 'rb') as f:
             btext = f.read()
-        text = self.xor_bytes_with_key(btext).decode()
-        return text
+        return self.xor_bytes_with_key(btext).decode()
 
 
 def encrypted_file_example():

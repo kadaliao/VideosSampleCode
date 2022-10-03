@@ -140,10 +140,9 @@ def frame_commands():
             imgui.end_popup()
         imgui.end()
 
-    if active["popup context void"]:
-        if imgui.begin_popup_context_void():
-            imgui.selectable("Clear")
-            imgui.end_popup()
+    if active["popup context void"] and imgui.begin_popup_context_void():
+        imgui.selectable("Clear")
+        imgui.end_popup()
 
     if active["drag drop"]:
         imgui.begin("Example: drag and drop")
@@ -264,7 +263,7 @@ def impl_glfw_init():
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
     glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, gl.GL_TRUE)
 
-    window = glfw.create_window(int(width), int(height), window_name, None, None)
+    window = glfw.create_window(width, height, window_name, None, None)
     glfw.make_context_current(window)
 
     if not window:

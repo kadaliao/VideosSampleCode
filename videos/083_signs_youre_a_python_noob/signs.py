@@ -9,9 +9,9 @@ import numpy as np
 
 def manual_str_formatting(name, subscribers):
     if subscribers > 100000:
-        print("Wow " + name + "! you have " + str(subscribers) + " subscribers!")
+        print(f"Wow {name}! you have {str(subscribers)} subscribers!")
     else:
-        print("Lol " + name + " that's not many subs")
+        print(f"Lol {name}" + " that's not many subs")
 
     # better
     if subscribers > 100000:
@@ -21,10 +21,8 @@ def manual_str_formatting(name, subscribers):
 
 
 def manually_calling_close_on_a_file(filename):
-    f = open(filename, "w")
-    f.write("hello!\n")
-    f.close()
-
+    with open(filename, "w") as f:
+        f.write("hello!\n")
     with open(filename, "w") as f:
         f.write("hello!\n")
     # close automatic, even if exception
@@ -84,10 +82,7 @@ def mutable_default_arguments():
     l2 = append(1)  # [1]
 
 def never_using_comprehensions():
-    squares = {}
-    for i in range(10):
-        squares[i] = i * i
-
+    squares = {i: i * i for i in range(10)}
     # same
     odd_squares = {i: i * i for i in range(10)}
 
@@ -101,10 +96,7 @@ def always_using_comprehensions(a, b, n):
 
     c = []
     for i in range(n):
-        for j in range(n):
-            ij_entry = sum(a[n * i + k] * b[n * k + j] for k in range(n))
-            c.append(ij_entry)
-
+        c.extend(sum(a[n * i + k] * b[n * k + j] for k in range(n)) for j in range(n))
     return c
 
 def checking_type_equality():
@@ -124,48 +116,23 @@ def checking_type_equality():
 
 
 def equality_for_singletons(x):
-    if x == None:
-        pass
-
-    if x == True:
-        pass
-
-    if x == False:
-        pass
-
-    # better
-    if x is None:
-        pass
-
-    if x is True:
-        pass
-
-    if x is False:
-        pass
+    pass
 
 def checking_bool_or_len(x):
-    if bool(x):
-        pass
-
-    if len(x) != 0:
-        pass
-
-    # usually equivalent to
-    if x:
-        pass
+    pass
 
 def range_len_pattern():
     a = [1, 2, 3]
-    for i in range(len(a)):
-        v = a[i]
+    for item in a:
+        v = item
         ...
 
     # instead
-    for v in a:
+    for _ in a:
         ...
 
     # or if you wanted the index
-    for i, v in enumerate(a):
+    for _ in a:
         ...
 
     # using i to sync between two things?
@@ -181,34 +148,30 @@ def range_len_pattern():
 
 def for_key_in_dict_keys():
     d = {"a": 1, "b": 2, "c": 3}
-    for key in d.keys():
+    for _ in d:
         ...
 
     # that's the default
-    for key in d:
+    for _ in d:
         ...
 
     # or if you meant to make a copy of keys
-    for key in list():
+    for _ in []:
         ...
 
 def not_using_dict_items():
     d = {"a": 1, "b": 2, "c": 3}
-    for key in d:
-        val = d[key]
+    for _ in d:
         ...
 
-    for key, val in d.items():
+    for _ in d:
         ...
 
 def tuple_unpacking():
     x = 0
     y = 1
 
-    tmp = x
-    x = y
-    y = tmp
-
+    x, y = y, x
     x, y = 0, 1
     x, y = y, x
 
@@ -222,12 +185,9 @@ def tuple_unpacking():
 def index_counter_variable():
     l = [1, 2, 3]
 
-    i = 0
-    for x in l:
+    for _ in l:
         ...
-        i += 1
-
-    for i, x in enumerate(l):
+    for _ in l:
         ...
 
 def timing_with_time():

@@ -3,16 +3,10 @@ from typing import TypeVar
 T = TypeVar('T', str, bytes, bytearray)
 
 def removeprefix(s: T, prefix: T) -> T:
-    if s.startswith(prefix):
-        return s[len(prefix):]
-    else:
-        return s[:]
+    return s[len(prefix):] if s.startswith(prefix) else s[:]
 
 def removesuffix(s: T, suffix: T) -> T:
-    if suffix and s.endswith(suffix):
-        return s[:-len(suffix)]
-    else:
-        return s[:]
+    return s[:-len(suffix)] if suffix and s.endswith(suffix) else s[:]
 
 def test_removeprefix():
     assert removeprefix('abctest', 'abc') == 'test'

@@ -17,7 +17,7 @@ def is_sorted(a: list, *, key=None, reverse=False) -> bool:
     if not a:
         return True
     b = a if key is None else map(key, a)
-    cmp = operator.le if not reverse else operator.ge
+    cmp = operator.ge if reverse else operator.le
     head = iter(b)
     tail = iter(b)
     next(tail)
@@ -99,8 +99,7 @@ class GeometricStringMaker(DataMaker):
     def make(self, size, seed):
         np.random.seed(seed)
         lengths = np.random.geometric(p=1 / 5, size=size)
-        strs = [random_str(l) for l in lengths]
-        return strs
+        return [random_str(l) for l in lengths]
 
 
 class SortedGeometricStringMaker(DataMaker):
@@ -125,8 +124,7 @@ class UniformTwoIntsAndAGeometricStringMaker(DataMaker):
         ys = np.random.randint(low=0, high=2 ** 31 - 1, size=size)
         lengths = np.random.geometric(p=1 / 5, size=size)
         strs = (random_str(l) for l in lengths)
-        data = [TwoIntsAndAString(x, y, s) for x, y, s in zip(xs, ys, strs)]
-        return data
+        return [TwoIntsAndAString(x, y, s) for x, y, s in zip(xs, ys, strs)]
 
 
 class UniformTwoIntsAndAGeometricStringTupleMaker(DataMaker):
@@ -136,8 +134,7 @@ class UniformTwoIntsAndAGeometricStringTupleMaker(DataMaker):
         ys = np.random.randint(low=0, high=2 ** 31 - 1, size=size)
         lengths = np.random.geometric(p=1 / 5, size=size)
         strs = (random_str(l) for l in lengths)
-        data = [(x, y, s) for x, y, s in zip(xs, ys, strs)]
-        return data
+        return list(zip(xs, ys, strs))
 
 
 @dataclass
@@ -154,13 +151,12 @@ class SortingTestCase:
     def run(self) -> None:
         data = self.data_maker.make(self.size, self.seed)
         kwargs = self.sort_kwargs
+        start = time.perf_counter_ns()
         if kwargs:
-            start = time.perf_counter_ns()
             data.sort(**kwargs)
             end = time.perf_counter_ns()
             assert is_sorted(data, **kwargs)
         else:
-            start = time.perf_counter_ns()
             data.sort()
             end = time.perf_counter_ns()
             assert is_sorted(data)
@@ -174,8 +170,16 @@ def make_all_test_cases(sizes: list[int], seeds: list[int],
 
     for size, seed, data_maker in product(sizes, seeds, data_makers):
         if use_kwargs:
-            for sort_kwargs in data_maker.compatible_sort_kwargs():
-                tests.append(SortingTestCase(size=size, seed=seed, data_maker=data_maker, sort_kwargs=sort_kwargs))
+            tests.extend(
+                SortingTestCase(
+                    size=size,
+                    seed=seed,
+                    data_maker=data_maker,
+                    sort_kwargs=sort_kwargs,
+                )
+                for sort_kwargs in data_maker.compatible_sort_kwargs()
+            )
+
         else:
             tests.append(SortingTestCase(size=size, seed=seed, data_maker=data_maker, sort_kwargs=None))
 
@@ -244,8 +248,6 @@ def main():
     include_reverse_when_plotting = False
     sizes = list(range(1024))
     seeds = list(range(10))
-    trials = 20  # lower this if you don't want to wait as long, 1 is fine "just to see"
-
     # add in or comment out data makers
     data_makers: list[DataMaker] = [
         UniformIntMaker(),
@@ -267,6 +269,8 @@ def main():
     if recompute_results:
         tests = make_all_test_cases(sizes=sizes, seeds=seeds, data_makers=data_makers, use_kwargs=True)
         shuffle_random = random.Random(1)
+        trials = 20  # lower this if you don't want to wait as long, 1 is fine "just to see"
+
         run_tests_n_times(tests, trials, shuffle_random)
         df = test_data_to_df(tests)
         df.to_pickle(pkl_filename)

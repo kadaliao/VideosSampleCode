@@ -6,7 +6,7 @@ def cool(n):
         print(i * "*")
     from json import load
     load(...)
-    True, True, True == (True, True, True)
+    (True, True, (True, True, True) == True)
 
 
-True, True, ( True == (True, True, True))
+(True, True, (True, True, True) == True)

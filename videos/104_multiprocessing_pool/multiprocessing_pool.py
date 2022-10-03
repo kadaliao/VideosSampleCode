@@ -95,7 +95,7 @@ def fib(n):
 
 def n_fibs(n):
     if n < 2:
-        return [i for i in range(n)]
+        return list(range(n))
     fibs = [0, 1]
     a, b = 0, 1
     for _ in range(n - 2):

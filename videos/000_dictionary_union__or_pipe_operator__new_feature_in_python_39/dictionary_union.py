@@ -49,10 +49,9 @@ def test_not_even_plain_or_is_commutative():
 
 
 def test_dict_ior_syntax():
-    d = {'spam': 1, 'eggs': 2, 'cheese': 3}
     e = {'extra': 4}
 
-    d |= e
+    d = {'spam': 1, 'eggs': 2, 'cheese': 3} | e
     # same as d.update(e)
 
     assert d == {'spam': 1, 'eggs': 2, 'cheese': 3, 'extra': 4}

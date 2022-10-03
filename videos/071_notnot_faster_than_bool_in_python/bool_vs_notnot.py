@@ -14,13 +14,11 @@ def dunder_bool_convert(x):
 
 
 def if_x(x):
-    if x:
-        pass
+    pass
 
 
 def if_notnot_x(x):
-    if not not x:
-        pass
+    pass
 
 
 def nop(x):

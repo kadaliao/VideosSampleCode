@@ -16,9 +16,7 @@ def command_split(command):
         print("didn't match")
 
 def match_errno(errno):
-    if errno == 0:
-        pass
-    elif errno == 1:
+    if errno in [0, 1]:
         pass
     elif errno == 42:
         print("42!")
@@ -27,12 +25,12 @@ def match_errno(errno):
 
 def match_alternatives(command):
     commands = command.split()
-    if commands == ["north"] or commands == ["go", "north"]:
+    if commands in [["north"], ["go", "north"]]:
         print("going north")
     elif len(commands) == 2 and commands[0] == "get":
         obj = commands[1]
         print(f"picking up: {obj}")
-    elif len(commands) == 3 and commands[0:2] == ["pick", "up"]:
+    elif len(commands) == 3 and commands[:2] == ["pick", "up"]:
         obj = commands[2]
         print(f"picking up: {obj}")
     elif len(commands) == 3 and commands[0] == "pick" and commands[2] == "up":
@@ -47,11 +45,12 @@ def match_capture_subpattern(command):
 
 def match_guard(command, exits):
     commands = command.split()
-    if len(commands) == 2 and commands[0] == "go" and commands[1] in exits:
-        direction = commands[1]
-        print(f"going {direction}")
-    elif len(commands) == 2 and commands[0] == "go":
-        print(f"can't go that way")
+    if len(commands) == 2 and commands[0] == "go":
+        if commands[1] in exits:
+            direction = commands[1]
+            print(f"going {direction}")
+        else:
+            print("can't go that way")
 
 @dataclass
 class Click:
@@ -78,9 +77,7 @@ def match_by_class(event):
         print("quitting")
     elif isinstance(event, KeyPress) and event.key_name == "up arrow":
         print("going up")
-    elif isinstance(event, KeyPress):
-        pass
-    else:
+    elif not isinstance(event, KeyPress):
         raise ValueError(f'unrecognized event: {event}')
 
 def match_json_event(event):

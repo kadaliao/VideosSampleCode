@@ -13,8 +13,7 @@ def descriptor_keys(obj):
 
 def print_obj_and_descriptor_keys(obj):
     print(obj)
-    keys = descriptor_keys(obj)
-    if keys:
+    if keys := descriptor_keys(obj):
         print(f"IS a descriptor, found: {keys}")
     else:
         print(f"IS NOT a descriptor, found: {keys}")
@@ -98,9 +97,7 @@ class Property:
         self.fget = fget
 
     def __get__(self, obj, objtype=None):
-        if obj is None:
-            return self
-        return self.fget(obj)
+        return self if obj is None else self.fget(obj)
 
 
 # 3. class methods and static methods
@@ -206,9 +203,7 @@ class GreaterThan:
         self.name = f'_{name}'
 
     def __get__(self, obj, objtype=None):
-        if obj is None:
-            return self
-        return getattr(obj, self.name)
+        return self if obj is None else getattr(obj, self.name)
 
     def __set__(self, obj, value):
         if not value > self.val:

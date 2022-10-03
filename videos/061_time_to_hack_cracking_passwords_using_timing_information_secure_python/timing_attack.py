@@ -5,7 +5,7 @@ import timeit
 
 import numpy as np
 
-allowed_chars = string.ascii_lowercase + " "
+allowed_chars = f"{string.ascii_lowercase} "
 password_database = {"james": "subscribe to mcoding"}
 
 
@@ -24,10 +24,7 @@ def check_password(user, guess):
     if len(guess) != len(actual):
         return False
 
-    for i in range(len(actual)):
-        if guess[i] != actual[i]:
-            return False
-    return True
+    return all(guess[i] == actual[i] for i in range(len(actual)))
 
 
 def random_str(size):
@@ -49,8 +46,7 @@ def crack_length(user, max_len=32, verbose=False) -> int:
         most_likely_n = np.argsort(times)[::-1][:5]
         print(most_likely_n, times[most_likely_n] / times[most_likely_n[0]])
 
-    most_likely = int(np.argmax(times))
-    return most_likely
+    return int(np.argmax(times))
 
 
 def crack_password(user, length, verbose=False):

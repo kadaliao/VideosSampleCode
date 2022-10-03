@@ -57,8 +57,7 @@ def pow_15_binary(x):
     x8 = x4 * x4
     x12 = x8 * x4
     x14 = x12 * x2
-    x15 = x14 * x
-    return x15
+    return x14 * x
 
 
 def pow_15_minimal(x):
@@ -67,8 +66,7 @@ def pow_15_minimal(x):
     x3 = x2 * x
     x6 = x3 * x3
     x12 = x6 * x6
-    x15 = x12 * x3
-    return x15
+    return x12 * x3
 
 
 def pow_15_minimal_fewest_temp_vars(x):

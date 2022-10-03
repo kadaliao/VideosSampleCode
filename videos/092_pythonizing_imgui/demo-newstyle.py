@@ -266,7 +266,7 @@ def impl_glfw_init():
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
     glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, gl.GL_TRUE)
 
-    window = glfw.create_window(int(width), int(height), window_name, None, None)
+    window = glfw.create_window(width, height, window_name, None, None)
     glfw.make_context_current(window)
 
     if not window:
